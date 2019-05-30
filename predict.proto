@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+message request {
+	Info info = 1;
+	RequestData data = 2;
+}
+
+message Info {
+	string file = 1;
+}
+
+message RequestData {
+	RequestFields fields = 1;
+}
+
+message RequestFields {
+	RequestField name = 1;
+	RequestField idnumber = 2;
+	RequestField birthday = 3;
+	RequestField address = 4;
+	RequestField residence = 5;
+}
+
+message RequestField {
+	string cuttype = 1;
+	repeated string images = 2;
+}
+
+
+message response {
+	Info info = 1;
+	ResponseData data = 2;
+}
+
+message ResponseData {
+	ResponseFields fields = 1;
+}
+
+message ResponseFields {
+	ResponseField name = 1;
+	ResponseField idnumber = 2;
+	ResponseField birthday = 3;
+	ResponseField address = 4;
+	ResponseField residence = 5;
+}
+
+message ResponseField {
+	repeated WordCans word_cans = 1;
+}
+
+message WordCans {
+	string word = 1;
+	repeated CharCans char_cans = 2;
+}
+
+message CharCans {
+	repeated Prob prob = 1;
+}
+
+message Prob {
+	string char = 1;
+	float prob = 2;
+}
+
+service OCR {
+    rpc Predict(request) returns (response) {}
+}
